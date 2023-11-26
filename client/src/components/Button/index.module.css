@@ -1,0 +1,22 @@
+.button {
+  border: 1px solid ;
+  border-radius: 5px;
+  padding: 0.3rem 1rem;
+  color: #fff;
+  font-size: 14px;
+}
+
+.delete {
+  background-color: #e51500;
+  border-color: #b61611;
+}
+
+.create{
+  background-color: #00b300;
+  border-color: #006600;
+}
+
+.cancel {
+  background-color: #b3b3b3;
+  border-color: #808080;
+}
