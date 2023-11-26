@@ -1,5 +1,6 @@
 Final project must include:
 - access delegation caddy -+
+- separate networks
 - some virtual processes +
 - backups and migrations (backup: script to backup database volume or file; migration: on startup load initial data to database ) -
 - different OS for different containers (ex.: ubuntu and debian) + 
