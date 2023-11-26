@@ -4,5 +4,3 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ="Europe/Vilnius"
 
 COPY playbook.yml /opt/playbook.yml
-
-RUN ansible-galaxy collection install community.docker
