@@ -67,6 +67,25 @@ services:
     networks:
       - web_net
 
+  startup:
+    container_name: startup
+    build:
+      context: ./startup
+      dockerfile: Dockerfile
+    command: ansible-playbook /opt/playbook.yml
+    volumes:
+      - ./startup:/opt
+      - //var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - caddy
+      - dbpostgres
+      - api
+      - client
+    networks:
+      - db_net
+      - web_net
+      - api_net
+
 volumes:
   dbdata:
 
