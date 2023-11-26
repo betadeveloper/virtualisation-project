@@ -1,4 +1,4 @@
-FROM ubuntu:23.04
+FROM ubuntu
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ="Europe/Vilnius"
