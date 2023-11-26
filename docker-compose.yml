@@ -7,7 +7,7 @@ x-common-variables: &common-variables
 services:
   dbpostgres:
     image: postgres
-    container_name: dbpostgres  
+    container_name: dbpostgres
     ports:
       - "5433:5432"
     volumes:
@@ -67,8 +67,6 @@ services:
     container_name: client
     networks:
       - web_net
-
-  
 
   startup:
     container_name: startup

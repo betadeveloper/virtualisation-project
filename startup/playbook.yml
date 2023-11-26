@@ -2,9 +2,9 @@
   hosts: localhost
   gather_facts: true
   tasks:
-  - name: Backup database
-    community.docker.docker_container_exec:
-      container: dbpostgres
-      command: bash -c "pg_dump -U ${DB_USER} -d ${DB_NAME} > /var/backups/db_backup_$(date +%Y%m%d).sql"
-      env:
-        PGPASSWORD: ${DB_PASSWORD}
+    - name: Backup database
+      community.docker.docker_container_exec:
+        container: dbpostgres
+        command: bash -c "pg_dump -U ${POSTGRES_USER} > /var/backups/db_backup_$(date +%Y-%m-%d_%H:%M:%S).sql"
+        env:
+          PGPASSWORD: ${POSTGRES_PASSWORD}

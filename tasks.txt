@@ -1,9 +1,10 @@
 Final project must include:
-- access delegation caddy -+
-- separate networks
+- access delegation caddy -+ (not sure if reverse proxy is enough which we have)
+- separate networks +
 - some virtual processes +
-- backups and migrations (backup: script to backup database volume or file; migration: on startup load initial data to database ) -
+- backups (script to backup database volume or file) +
+- migrations: (on startup load initial data to database ) -
 - different OS for different containers (ex.: ubuntu and debian) + 
-- data storage in volumes buckets or other storage facilities (add volume to database container)
+- data storage in volumes buckets or other storage facilities (add volume to database container) +
 - some form of automation for deployment and updates ? (do we need ansible for this?)
 - architectural diagram with explanations ---
