@@ -21,6 +21,7 @@ services:
     volumes:
       - /app/node_modules
       - ./backend:/app
+      - /var/backups:/var/backups
     environment:
       <<: *common-variables
       POSTGRES_HOST_IP: dbpostgres
