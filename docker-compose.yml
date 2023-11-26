@@ -1,27 +1,41 @@
 version: '3.8'
 
+x-common-variables: &common-variables
+  POSTGRES_USER: ${DB_USER}
+  POSTGRES_PASSWORD: ${DB_PASSWORD}
+
 services:
   dbpostgres:
     image: postgres
     ports:
       - "5433:5432"
     volumes:
+      - dbdata:/var/lib/postgresql/data
       - "./setup.sql:/docker-entrypoint-initdb.d/setup.sql"
-      - "./migration.sql:/docker-entrypoint-initdb.d/migration.sql"
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      <<: *common-variables
       POSTGRES_HOST: localhost
 
-  backend:
+  caddy:
+    depends_on:
+      - api
+      - client
+    restart: always
     build:
+      dockerfile: Dockerfile
+      context: ./caddy
+    ports:
+      - "3050:80"
+
+  api:
+    build:
+      dockerfile: Dockerfile
       context: "./backend"
     depends_on:
       - dbpostgres
     volumes:
       - /app/node_modules
       - ./backend:/app
-      - /var/backups:/var/backups
     environment:
       <<: *common-variables
       POSTGRES_HOST_IP: dbpostgres
@@ -42,3 +56,6 @@ services:
       - /app/node_modules
       - ./client:/app
     container_name: client
+
+volumes:
+  dbdata:
