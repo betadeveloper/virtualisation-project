@@ -2,9 +2,42 @@
   hosts: localhost
   gather_facts: true
   tasks:
-    - name: Backup database
+    - name: Build and run dbpostgres service
+      community.docker.docker_compose:
+        project_src: ../docker-compose.yml
+        services: dbpostgres
+        build: yes
+        state: present
+    - name: Copy SQL file into dbpostgres container
+      command: docker cp ../database_migrations/migration_1.sql dbpostgres:/tmp
+    - name: Run SQL commands from file
       community.docker.docker_container_exec:
         container: dbpostgres
-        command: bash -c "pg_dump -U ${POSTGRES_USER} > /var/backups/db_backup_$(date +%Y-%m-%d_%H:%M:%S).sql"
+        command: >
+          bash -c "psql -U ${DB_USER} -f /tmp/migration_1.sql"
         env:
-          PGPASSWORD: ${POSTGRES_PASSWORD}
+          PGPASSWORD: ${DB_PASSWORD}
+    - name: Build and run caddy service
+      community.docker.docker_compose:
+        project_src: ../docker-compose.yml
+        services: caddy
+        build: yes
+        state: present
+    - name: Build and run api service
+      community.docker.docker_compose:
+        project_src: ../docker-compose.yml
+        services: api
+        build: yes
+        state: present
+    - name: Build and run client service
+      community.docker.docker_compose:
+        project_src: ../docker-compose.yml
+        services: client
+        build: yes
+        state: present
+    - name: Build and run startup service
+      community.docker.docker_compose:
+        project_src: ../docker-compose.yml
+        services: startup
+        build: yes
+        state: present

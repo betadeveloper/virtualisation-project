@@ -1,0 +1,1 @@
+INSERT INTO reservations values ('wet2571e-c8ea-4984-83bd-c2b23fa3p3kd', 'Developers are cool', 'Application', 3);

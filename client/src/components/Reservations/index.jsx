@@ -46,12 +46,12 @@ const Reservations = ({ setTitle }) => {
         <div className={styles.list}>
           {reservations.length > 0 && reservations.map(reservation => (
             <ReservationItem 
-              key={reservation.id} 
-              reservation={reservation} 
-              setReservations={setReservations}
-              setDialogOpen={setDialogOpen}
-              setSelected={setSelected}
-            />
+            key={reservation.id} 
+            reservation={reservation} 
+            setReservations={setReservations}
+            setDialogOpen={setDialogOpen}
+            setSelected={setSelected}
+          />
             ))}
           {reservations.length === 0 && !isLoading && <div className={styles.empty}>There are no reservations</div>}
         </div>
