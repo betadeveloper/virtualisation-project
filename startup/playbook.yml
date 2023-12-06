@@ -2,6 +2,12 @@
   hosts: localhost
   gather_facts: true
   tasks:
+  - name: Backup database
+      community.docker.docker_container_exec:
+        container: dbpostgres
+        command: bash -c "pg_dump -U ${POSTGRES_USER} > /var/backups/db_backup_$(date +%Y-%m-%d_%H:%M:%S).sql"
+        env:
+          PGPASSWORD: ${POSTGRES_PASSWORD}
     - name: Build and run dbpostgres service
       community.docker.docker_compose:
         project_src: ../docker-compose.yml
