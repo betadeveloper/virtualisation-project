@@ -2,24 +2,17 @@
   hosts: localhost
   gather_facts: true
   tasks:
-  - name: Backup database
+    - name: Backup database
       community.docker.docker_container_exec:
         container: dbpostgres
         command: bash -c "pg_dump -U ${POSTGRES_USER} > /var/backups/db_backup_$(date +%Y-%m-%d_%H:%M:%S).sql"
         env:
           PGPASSWORD: ${POSTGRES_PASSWORD}
-    - name: Build and run dbpostgres service
-      community.docker.docker_compose:
-        project_src: ../docker-compose.yml
-        services: dbpostgres
-        build: yes
-        state: present
     - name: Copy SQL file into dbpostgres container
-      command: docker cp ../database_migrations/migration_1.sql dbpostgres:/tmp
+      command: docker cp ./database_migrations/migration_1.sql dbpostgres:/tmp
     - name: Run SQL commands from file
       community.docker.docker_container_exec:
         container: dbpostgres
-        command: >
-          bash -c "psql -U ${DB_USER} -f /tmp/migration_1.sql"
+        command: bash -c "psql -U ${POSTGRES_USER} -f /tmp/migration_1.sql"
         env:
-          PGPASSWORD: ${DB_PASSWORD}
+          PGPASSWORD: ${POSTGRES_PASSWORD}
