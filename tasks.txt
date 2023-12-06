@@ -10,7 +10,7 @@ Final project must include:
 - architectural diagram with explanations ---
 
 Mantas asks professor for clarification: 
-is access delegation done ? Is it enough just to route requests to different continers based on rules
+is access delegation done ? Is it enough just to route requests to different continers based on rules - answer: yes, thats what it is
 migrations - we should move the database initialization to ansible playbook tasks (create a folder database_migrations, where sql files would be stored and would be run )
 deployment automation
 

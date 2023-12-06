@@ -8,11 +8,11 @@
         command: bash -c "pg_dump -U ${POSTGRES_USER} > /var/backups/db_backup_$(date +%Y-%m-%d_%H:%M:%S).sql"
         env:
           PGPASSWORD: ${POSTGRES_PASSWORD}
-    - name: Copy SQL file into dbpostgres container
-      command: docker cp ./database_migrations/migration_1.sql dbpostgres:/tmp
+    # - name: Copy SQL file into dbpostgres container
+    #   command: docker cp /database_migrations/migration_1.sql dbpostgres:/tmp
     - name: Run SQL commands from file
       community.docker.docker_container_exec:
         container: dbpostgres
-        command: bash -c "psql -U ${POSTGRES_USER} -f /tmp/migration_1.sql"
+        command: bash -c "psql -U ${POSTGRES_USER} -f /tmp/database_migrations/migration_1.sql"
         env:
           PGPASSWORD: ${POSTGRES_PASSWORD}

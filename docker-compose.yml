@@ -11,6 +11,7 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
       - "./setup.sql:/docker-entrypoint-initdb.d/setup.sql"
+      - "./database_migrations:/tmp/database_migrations"
     environment:
       <<: *common-variables
       POSTGRES_HOST: localhost
